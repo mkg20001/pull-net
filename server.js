@@ -1,16 +1,18 @@
-var TCPWrap = process.binding('tcp_wrap')
-var net = require('net')
-var Handle = require('./handle')
+'use strict'
+
+const TCPWrap = process.binding('tcp_wrap')
+const net = require('net')
+const Handle = require('./handle')
 
 function noop () {}
 
 module.exports = function (onConnect) {
-  var server = TCPWrap.constants ? new TCPWrap.TCP(TCPWrap.constants.SERVER) : new TCPWrap.TCP()
+  const server = TCPWrap.constants ? new TCPWrap.TCP(TCPWrap.constants.SERVER) : new TCPWrap.TCP()
 
   return {
     listen: function (port, addr, cb) {
       cb = cb || noop
-      var err
+      let err
       if (net.isIPv6(addr)) {
         err = server.bind6(addr, port)
       } else {
@@ -36,7 +38,7 @@ module.exports = function (onConnect) {
     },
     address: function () {
       if (server && server.getsockname) {
-        var out = {}
+        const out = {}
         server.getsockname(out)
         return out
       } else if (this._pipeName) {

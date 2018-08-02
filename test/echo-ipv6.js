@@ -1,11 +1,13 @@
-var pull = require('pull-stream')
+'use strict'
 
-var net = require('net')
-var toPull = require('stream-to-pull-stream')
+const pull = require('pull-stream')
 
-var createServer = require('../server')
+const net = require('net')
+const toPull = require('stream-to-pull-stream')
 
-var server = createServer(function (stream) {
+const createServer = require('../server')
+
+const server = createServer(function (stream) {
   console.log(stream)
   pull(
     stream.source,
@@ -17,9 +19,9 @@ var server = createServer(function (stream) {
     stream.sink)
 }).listen(9090, '::1')
 
-var client = net.connect(9090, '::1')
+const client = net.connect(9090, '::1')
 pull(
-  pull.values([new Buffer('HELLO THERE')]),
+  pull.values([Buffer.from('HELLO THERE')]),
   toPull.duplex(client),
   pull.drain(console.log, function () {
     console.log('END')

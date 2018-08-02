@@ -1,9 +1,11 @@
-var pull = require('pull-stream')
+'use strict'
 
-var connect = require('../client')
-var createServer = require('../server')
+const pull = require('pull-stream')
 
-var server = createServer(function (stream) {
+const connect = require('../client')
+const createServer = require('../server')
+
+const server = createServer(function (stream) {
   console.log(stream)
   pull(
     stream.source,
@@ -19,7 +21,7 @@ console.log('server', server)
 
 // setTimeout(function () {
 
-var client = connect(9988, '127.0.0.1')
+const client = connect(9988, '127.0.0.1')
 
 //, function (err, stream) {
 //    if(err) throw err
@@ -36,7 +38,7 @@ var client = connect(9988, '127.0.0.1')
 // },100)
 
 pull(
-  pull.values([new Buffer('HELLO THERE')]),
+  pull.values([Buffer.from('HELLO THERE')]),
   client,
   pull.drain(console.log, function () {
     console.log('END')

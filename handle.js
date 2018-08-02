@@ -1,3 +1,5 @@
+'use strict'
+
 const ShutdownWrap = process.binding('stream_wrap').ShutdownWrap
 const WriteWrap = process.binding('stream_wrap').WriteWrap
 const LOW = 32 * 1024
@@ -6,16 +8,16 @@ const HIGH = 64 * 1024
 function noop () {}
 
 module.exports = function (handle, cb) {
-  var queue = []
-  var buffered = 0
-  var waiting = null
-  var ended = null
+  let queue = []
+  let buffered = 0
+  let waiting = null
+  let ended = null
 
   handle.onread = function (n, data) {
     if (n <= 0) ended = true
 
     if (waiting) {
-      var cb = waiting
+      let cb = waiting
       waiting = null
       return cb(ended, data)
     }
@@ -28,7 +30,7 @@ module.exports = function (handle, cb) {
   }
 
   function shutdown (cb) {
-    var end = new ShutdownWrap()
+    const end = new ShutdownWrap()
     end.async = false
     end.handle = handle
     end.oncomplete = function (_, __, ___, err) {
@@ -47,7 +49,7 @@ module.exports = function (handle, cb) {
       }
 
       if (queue.length) {
-        var data = queue.shift()
+        const data = queue.shift()
         buffered -= data.length
         _cb(null, data)
       } else if (ended) {
@@ -62,7 +64,7 @@ module.exports = function (handle, cb) {
       read(null, function next (err, data) {
         if (err) shutdown(cb)
         else {
-          var write = new WriteWrap()
+          const write = new WriteWrap()
           write.async = false // what does this mean?
           write.handle = handle
           // this keeps the buffer being GC'd till write is complete (i think)
