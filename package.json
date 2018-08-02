@@ -3,6 +3,7 @@
   "description": "A replacement for net using pull streams all the way",
   "version": "1.0.2",
   "homepage": "https://github.com/dominictarr/pull-net",
+  "main": "index.js",
   "repository": {
     "type": "git",
     "url": "git://github.com/dominictarr/pull-net.git"
