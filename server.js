@@ -32,7 +32,13 @@ module.exports = function (onConnect) {
         if (err) {
           return console.error(new Error('error connected:' + err))
         }
-        onConnect(Handle(client, noop))
+
+        let stream = Handle(client, noop)
+        stream.address = {}
+        client.getsockname(stream.address)
+        stream.remoteAddress = {}
+        client.getpeername(stream.remoteAddress)
+        onConnect(stream)
       }
       return server
     },
