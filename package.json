@@ -9,13 +9,13 @@
     "url": "git://github.com/dominictarr/pull-net.git"
   },
   "dependencies": {
-    "pull-pushable": "^2.0.0",
-    "pull-stream": "^3.4.0"
+    "pull-pushable": "^2.2.0",
+    "pull-stream": "^3.6.8"
   },
   "devDependencies": {
-    "pull-stream": "^3.4.0",
-    "standard": "^7.1.2",
-    "stream-to-pull-stream": "^1.6.8",
+    "pull-stream": "^3.6.8",
+    "standard": "^11.0.1",
+    "stream-to-pull-stream": "^1.7.2",
     "tape": "^4.9.1"
   },
   "scripts": {
